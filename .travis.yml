@@ -22,19 +22,13 @@ env:
   global:
     - NODE_ENV=tests
     - DATABASE_URL=mongodb://mongodb:27017/star
-    - DATABASE_URL_TESTS = mongodb://mongodb:27017/star_test
+    - DATABASE_URL_TESTS=mongodb://mongodb:27017/star_test
     - PORT=8080
     - JWT_KEY=ca8159dfc3817dcf5727b1fee6735d107dc82cb8eacbd030c0b99fe7ab09c5e8
     - JWT_EXPIRATION_TIME='15m'
 
 before_script:
   - npm install
-
-jobs:
-  include:
-    - stage: test
-      script:
-        - npm test
 
 cache:
   directories:
