@@ -1,0 +1,32 @@
+language: node_js
+
+cache:
+  directories:
+  - ~/.npm
+
+os:
+  - linux
+
+node_js:
+  - '8'
+  - '10'
+
+services: 
+  - mongodb
+
+branches:
+  only:
+    - master
+
+env:
+  global:
+    - NODE_ENV=tests
+    - PORT=8080
+    - JWT_KEY=ca8159dfc3817dcf5727b1fee6735d107dc82cb8eacbd030c0b99fe7ab09c5e8
+    - JWT_EXPIRATION_TIME='15m'
+
+jobs:
+  include:
+    - stage: test
+      script:
+        - npm run test
