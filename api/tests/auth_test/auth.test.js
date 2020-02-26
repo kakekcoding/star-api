@@ -39,7 +39,7 @@ describe('Authentication', () => {
     });
 
     describe('POST /authorize', () => {
-        it('it should send validation error', (done) => {
+        it('should send validation error', (done) => {
             chai.request(server).post('/api/v1/auth/user/authorize')
             .send({username: testData.username})
             .end((err, res) => {
@@ -48,7 +48,7 @@ describe('Authentication', () => {
             });
         });
 
-        it('it should send login failed', (done) => {
+        it('should send login failed', (done) => {
             chai.request(server).post('/api/v1/auth/user/authorize')
             .send({username: 'john.doe', password: 'johnsecret'})
             .end((err, res) => {
@@ -57,7 +57,7 @@ describe('Authentication', () => {
             });
         });
 
-        it('it should user logged', (done) => {
+        it('should user logged', (done) => {
             chai.request(server).post('/api/v1/auth/user/authorize')
             .send({username: testData.username, password: testData.password})
             .end((err, res) => {
