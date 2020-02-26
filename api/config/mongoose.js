@@ -3,16 +3,12 @@ require('dotenv').config();
 
 mongoose.Promise = Promise;
 
-const DB_URL = process.env.DATABASE_URL;
-
 mongoose.connection.on('error', (err) => {
     console.error(`Database connection error: ${err}`);
     process.exit(1);
 });
 
-if (process.env.NODE_ENV === 'test') {
-    mongoose.set('debug', true);
-}
+const DB_URL = process.env.NODE_ENV === 'tests' ? process.env.DATABASE_URL_TESTS : process.env.DATABASE_URL;
 
 exports.connect = () => {
     mongoose.connect(DB_URL, {
@@ -20,7 +16,7 @@ exports.connect = () => {
         useUnifiedTopology: true,
         useCreateIndex: true,
         keepAlive: 1,
-    }).then(() => console.log('Database connected'));
+    }).then(() => console.log(`Database connected: ${DB_URL}`));
 
     return mongoose.connection;
 };
