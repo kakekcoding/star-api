@@ -1,7 +1,8 @@
 
 # Star HRD RESTful API Project
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/757f2061d01843eea590274f04b8daf9)](https://app.codacy.com/manual/arifai/star?utm_source=github.com&utm_medium=referral&utm_content=arifai/star&utm_campaign=Badge_Grade_Dashboard)
+[![Ahmad Rifa'i](https://img.shields.io/badge/author-%40arifai-blue)](https://github.com/arifai) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/757f2061d01843eea590274f04b8daf9)](https://app.codacy.com/manual/arifai/star?utm_source=github.com&utm_medium=referral&utm_content=arifai/star&utm_campaign=Badge_Grade_Dashboard) [![MIT](https://img.shields.io/badge/license-MIT-orange)](https://github.com/arifai/star/blob/master/LICENSE) [![Build Status](https://travis-ci.com/arifai/star.svg?branch=master)](https://travis-ci.com/arifai/star)
+
 
 Star HRD adalah aplikasi HRD berbasis website, dibangun menggunakan [Nodejs](https://nodejs.org/en/ "Go to Nodejs"), [Vuejs](https://vuejs.org/ "Go to Vuejs"), [MongoDB](https://www.mongodb.com/, "Go to MongoDB") sebagai database.
 
