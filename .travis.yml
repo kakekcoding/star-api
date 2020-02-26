@@ -27,9 +27,6 @@ env:
     - JWT_KEY=ca8159dfc3817dcf5727b1fee6735d107dc82cb8eacbd030c0b99fe7ab09c5e8
     - JWT_EXPIRATION_TIME='15m'
 
-before_script:
-  - npm install
-
 cache:
   directories:
     - ~/.npm

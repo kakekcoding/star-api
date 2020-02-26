@@ -4,11 +4,8 @@ const UserModel = require('../../model/user_model');
 
 describe('Authentication', () => {
     // before all clear database
-    before((done) => {
-        setTimeout(done, 10000);
-        UserModel.deleteMany({}, (err) => {
-            done();
-        });
+    before(async () => {
+        await UserModel.deleteMany({});
     });
 
     const testData = {
@@ -31,40 +28,40 @@ describe('Authentication', () => {
 
         it('should register user', (done) => {
             chai.request(server).post('/api/v1/auth/user/register')
-            .send(testData)
-            .end((err, res) => {
-                res.should.have.status(httpStatus.CREATED);
-                done();
-            });
+                .send(testData)
+                .end((err, res) => {
+                    res.should.have.status(httpStatus.CREATED);
+                    done();
+                });
         });
     });
 
     describe('POST /authorize', () => {
         it('should send validation error', (done) => {
             chai.request(server).post('/api/v1/auth/user/authorize')
-            .send({username: testData.username})
-            .end((err, res) => {
-                res.should.have.status(httpStatus.UNPROCESSABLE_ENTITY);
-                done();
-            });
+                .send({ username: testData.username })
+                .end((err, res) => {
+                    res.should.have.status(httpStatus.UNPROCESSABLE_ENTITY);
+                    done();
+                });
         });
 
         it('should send login failed', (done) => {
             chai.request(server).post('/api/v1/auth/user/authorize')
-            .send({username: 'john.doe', password: 'johnsecret'})
-            .end((err, res) => {
-                res.should.have.status(httpStatus.UNAUTHORIZED);
-                done();
-            });
+                .send({ username: 'john.doe', password: 'johnsecret' })
+                .end((err, res) => {
+                    res.should.have.status(httpStatus.UNAUTHORIZED);
+                    done();
+                });
         });
 
         it('should user logged', (done) => {
             chai.request(server).post('/api/v1/auth/user/authorize')
-            .send({username: testData.username, password: testData.password})
-            .end((err, res) => {
-                res.should.have.status(httpStatus.OK);
-                done();
-            });
+                .send({ username: testData.username, password: testData.password })
+                .end((err, res) => {
+                    res.should.have.status(httpStatus.OK);
+                    done();
+                });
         });
     });
 });
