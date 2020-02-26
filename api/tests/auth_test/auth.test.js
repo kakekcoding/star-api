@@ -7,7 +7,7 @@ describe('Authentication', () => {
     before((done) => {
         UserModel.deleteMany({}, (err) => {
             done();
-        });
+        }).catch(done);
     });
 
     const testData = {
