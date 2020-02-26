@@ -2,6 +2,10 @@ const httpStatus = require('http-status');
 const { chai, chaiHttp, server, should } = require('../test_config');
 const UserModel = require('../../model/user_model');
 
+setTimeout(() => {
+    run()
+}, 5000);
+
 describe('Authentication', () => {
     // before all clear database
     before(async () => {
