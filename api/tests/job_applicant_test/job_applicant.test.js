@@ -2,12 +2,12 @@ const httpStatus = require('http-status');
 const { chai, server } = require('../test_config');
 const JobApplicantModel = require('../../model/job_applicant_model');
 
-describe('Job Applicant', () => {
-    // before all clear database
-    before(async () => {
-        await JobApplicantModel.deleteMany({});
-    });
+// before all clear database
+after(async () => {
+    await JobApplicantModel.deleteMany({});
+});
 
+describe('Job Applicant', () => {
     const userData = {
         username: 'badcat',
         password: 'freshfish'
