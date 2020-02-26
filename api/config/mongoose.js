@@ -16,7 +16,7 @@ exports.connect = () => {
         useUnifiedTopology: true,
         useCreateIndex: true,
         keepAlive: 1,
-    }).then(() => console.log(`Database connected: ${DB_URL}`));
+    }).then(() => console.log('Database connected'));
 
     return mongoose.connection;
 };
