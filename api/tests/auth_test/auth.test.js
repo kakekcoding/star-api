@@ -3,8 +3,9 @@ const { chai, chaiHttp, server, should } = require('../test_config');
 const UserModel = require('../../model/user_model');
 
 describe('Authentication', () => {
-    // before each clear database
+    // before all clear database
     before((done) => {
+        setTimeout(done, 10000);
         UserModel.deleteMany({}, (err) => {
             done();
         });
