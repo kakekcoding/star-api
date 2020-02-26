@@ -50,6 +50,8 @@ describe('Job Applicant', () => {
             chai.request(server).post('/api/v1/job_applicant/create')
                 .send(testData).end((err, res) => {
                     res.should.have.status(httpStatus.CREATED);
+                    res.body.should.have.property('message').eql('job applicant created');
+                    testData.id = res.body.result._id;
                     done();
                 });
         });
@@ -74,6 +76,15 @@ describe('Job Applicant', () => {
 
         it('should success get all job applicant', (done) => {
             chai.request(server).get('/api/v1/job_applicant')
+                .set('x-access-token', userData.token)
+                .end((err, res) => {
+                    res.should.have.status(httpStatus.OK);
+                    done();
+                });
+        });
+
+        it('should success get job applicant by _id', (done) => {
+            chai.request(server).get('/api/v1/job_applicant/' + testData.id)
                 .set('x-access-token', userData.token)
                 .end((err, res) => {
                     res.should.have.status(httpStatus.OK);

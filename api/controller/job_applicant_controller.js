@@ -43,3 +43,17 @@ exports.get = async (req, res) => {
         return apiResponse.errorResponse(res, 'a problem occurred', error);
     }
 };
+
+exports.getDetail = async (req, res) => {
+    try {
+        JobApplicantModel.findById(req.params._id, (err, result) => {
+            if (err) {
+                return apiResponse.notFoundResponse(res, 'data not found');
+            } else {
+                return apiResponse.successResponse(res, '', result);
+            }
+        });
+    } catch (error) {
+        return apiResponse.errorResponse(res, 'a problem occurred', error);
+    }
+};
