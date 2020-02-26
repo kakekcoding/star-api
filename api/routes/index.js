@@ -20,5 +20,6 @@ router.route('/auth/user/authorize').post(loginValidation(), authController.logi
 router.route('/job_applicant/create').post(jobApplicantValidation(), jobApplicantController.create);
 router.route('/job_applicant').get(auth, jobApplicantController.get);
 router.route('/job_applicant/:_id').get(auth, jobApplicantController.getDetail);
+router.route('/job_applicant/update/:id').put(auth, jobApplicantController.update);
 
 module.exports = router;

@@ -57,3 +57,36 @@ exports.getDetail = async (req, res) => {
         return apiResponse.errorResponse(res, 'a problem occurred', error);
     }
 };
+
+exports.update = async (req, res) => {
+    try {
+        const jobApplicant = new JobApplicantModel({
+            _id: req.params.id,
+            full_name: req.body.full_name,
+            age: req.body.email,
+            email: req.body.email,
+            phone_num: req.body.phone_num,
+            address: req.body.address,
+            served: req.body.served,
+            image: req.body.image,
+            created_at: req.body.created_at,
+            updated_at: req.body.updated_at
+        });
+
+        JobApplicantModel.findById(req.params.id, (err, found) => {
+            if (found === null) {
+                return apiResponse.notFoundResponse(res, 'data not found')
+            } else {
+                JobApplicantModel.findByIdAndUpdate(req.params.id, jobApplicant, {}, (err) => {
+                    if (err) {
+                        return apiResponse.badRequestResponse(res, 'something wrong', err);
+                    } else {
+                        return apiResponse.successResponse(res, 'job applicant updated', jobApplicant);
+                    }
+                });
+            }
+        });
+    } catch (error) {
+        return apiResponse.errorResponse(res, 'a problem occurred', error);
+    }
+};
