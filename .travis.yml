@@ -21,11 +21,11 @@ branches:
 env:
   global:
     - NODE_ENV=tests
-    - DATABASE_URL=mongodb://mongodb:27017/star
-    - DATABASE_URL_TESTS=mongodb://mongodb:27017/star_test
+    - DATABASE_URL=mongodb://127.0.0.1/star
+    - DATABASE_URL_TESTS=mongodb://127.0.0.1/star_test
     - PORT=8080
-    - JWT_KEY=ca8159dfc3817dcf5727b1fee6735d107dc82cb8eacbd030c0b99fe7ab09c5e8
-    - JWT_EXPIRATION_TIME='15m'
+    - JWT_KEY=221b368d7f5f597867f525971f28ff75
+    - JWT_EXPIRATION_TIME='2m'
 
 cache:
   directories:
