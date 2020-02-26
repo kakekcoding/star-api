@@ -27,7 +27,7 @@ const registerValidation = () => {
             .withMessage('password min 8 characters, max 200 characters')
             .notEmpty().withMessage('password is required').trim()
     ];
-}
+};
 
 const loginValidation = () => {
     return [
@@ -41,6 +41,6 @@ const loginValidation = () => {
             .withMessage('password min 8 characters, max 200 characters')
             .notEmpty().withMessage('password is required').trim()
     ];
-}
+};
 
 module.exports = { registerValidation, loginValidation };

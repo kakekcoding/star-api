@@ -131,3 +131,20 @@ exports.forbiddenResponse = function (res, message) {
 
     return res.status(httpStatus.FORBIDDEN).send(results);
 };
+
+/**
+ * Bad request response
+ * @param {string} res
+ * @param {string} message
+ * @param {string} result
+ * @return http-status BAD REQUEST
+ */
+exports.badRequestResponse = function (res, message, result) {
+    const results = {
+        status: 'error',
+        message: message,
+        result: result
+    };
+
+    return res.status(httpStatus.BAD_REQUEST).send(results);
+};

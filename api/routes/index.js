@@ -1,11 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const authRoute = require('./auth_route');
+const authController = require('../controller/auth_controller');
+const jobApplicantController = require('../controller/job_applicant_controller');
+const { registerValidation, loginValidation } = require('../validation/auth_validation');
+const { jobApplicantValidation } = require('../validation/job_applicant_validation');
+const auth = require('../middleware/auth');
 
+// index
 router.get('/', (req, res) => res.send('Welcome'));
 
+// server status
 router.get('/status', (req, res) => res.send('Server is up'));
 
-router.use('/auth/user', authRoute);
+// auth
+router.route('/auth/user/register').post(registerValidation(), authController.register);
+router.route('/auth/user/authorize').post(loginValidation(), authController.login);
+
+// job applicant
+router.route('/job_applicant/create').post(jobApplicantValidation(), jobApplicantController.create);
+router.route('/job_applicant').get(auth, jobApplicantController.get);
 
 module.exports = router;
