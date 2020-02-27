@@ -47,7 +47,7 @@ exports.get = async (req, res) => {
 
 exports.getDetail = async (req, res) => {
     try {
-        JobApplicantModel.findById(req.params._id, (err, result) => {
+        JobApplicantModel.findById(req.params.id, (err, result) => {
             if (err) {
                 return apiResponse.notFoundResponse(res, 'data not found');
             } else {

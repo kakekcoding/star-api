@@ -19,7 +19,7 @@ router.route('/auth/user/authorize').post(loginValidation(), authController.logi
 // job applicant
 router.route('/job_applicant/create').post(jobApplicantValidation(), jobApplicantController.create);
 router.route('/job_applicant').get(auth, jobApplicantController.get);
-router.route('/job_applicant/:_id').get(auth, jobApplicantController.getDetail);
+router.route('/job_applicant/:id').get(auth, jobApplicantController.getDetail);
 router.route('/job_applicant/update/:id').put(auth, jobApplicantController.update);
 router.route('/job_applicant/delete/:id').delete(auth, jobApplicantController.delete);
 
