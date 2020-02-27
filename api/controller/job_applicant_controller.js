@@ -1,4 +1,5 @@
 const { validationResult } = require('express-validator');
+const httpStatus = require('http-status');
 const JobApplicantModel = require('../model/job_applicant_model');
 const apiResponse = require('../helper/api_response');
 
@@ -89,4 +90,15 @@ exports.update = async (req, res) => {
     } catch (error) {
         return apiResponse.errorResponse(res, 'a problem occurred', error);
     }
+};
+
+exports.delete = async (req, res) => {
+    JobApplicantModel.findByIdAndRemove(req.params.id)
+        .then((found) => {
+            if (!found) return apiResponse.notFoundResponse(res, 'data not found');
+
+            apiResponse.successResponse(res, 'success deleted', []);
+        }).catch((err) => {
+            return apiResponse.errorResponse(res, 'a problem occurred', err);
+        });
 };
