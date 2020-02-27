@@ -92,4 +92,35 @@ describe('Job Applicant', () => {
                 });
         });
     });
+
+    describe('PUT /job_applicant/update', () => {
+        it('should send forbidden when user not logged in', (done) => {
+            chai.request(server).put('/api/v1/job_applicant/update/' + testData.id)
+                .send({ full_name: 'Joy' })
+                .end((err, res) => {
+                    res.should.have.status(httpStatus.FORBIDDEN);
+                    done();
+                });
+        });
+
+        it('should send 404 when id not found', (done) => {
+            chai.request(server)
+                .put('/api/v1/job_applicant/update/607f1f77bcf86cd799439011')
+                .set('x-access-token', userData.token)
+                .send({ full_name: 'Joy' })
+                .end((err, res) => {
+                    res.should.have.status(httpStatus.NOT_FOUND);
+                    done();
+                });
+        });
+
+        it('should send success', (done) => {
+            chai.request(server).put('/api/v1/job_applicant/update/' + testData.id)
+                .set('x-access-token', userData.token).send({ full_name: 'Joy' })
+                .end((err, res) => {
+                    res.should.have.status(httpStatus.OK);
+                    done();
+                });
+        });
+    });
 });
