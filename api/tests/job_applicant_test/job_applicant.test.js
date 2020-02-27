@@ -83,7 +83,25 @@ describe('Job Applicant', () => {
                 });
         });
 
-        it('should success get job applicant by _id', (done) => {
+        it('should error get job applicant id not valid', (done) => {
+            chai.request(server).get('/api/v1/job_applicant/607f1f77bcf86cd79943901123')
+                .set('x-access-token', userData.token)
+                .end((err, res) => {
+                    res.should.have.status(httpStatus.BAD_REQUEST);
+                    done();
+                });
+        });
+
+        it('should 404 get job applicant id not found', (done) => {
+            chai.request(server).get('/api/v1/job_applicant/607f1f77bcf86cd799439011')
+                .set('x-access-token', userData.token)
+                .end((err, res) => {
+                    res.should.have.status(httpStatus.NOT_FOUND);
+                    done();
+                });
+        });
+
+        it('should success get job applicant by id', (done) => {
             chai.request(server).get('/api/v1/job_applicant/' + testData.id)
                 .set('x-access-token', userData.token)
                 .end((err, res) => {
