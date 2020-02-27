@@ -123,4 +123,33 @@ describe('Job Applicant', () => {
                 });
         });
     });
+
+    describe('DELETE /job_applicant/delete', () => {
+        it('should send forbidden when user not logged in', (done) => {
+            chai.request(server).delete('/api/v1/job_applicant/delete/' + testData.id)
+                .end((err, res) => {
+                    res.should.have.status(httpStatus.FORBIDDEN);
+                    done();
+                });
+        });
+
+        it('should send 404 when id not found', (done) => {
+            chai.request(server)
+                .delete('/api/v1/job_applicant/delete/607f1f77bcf86cd799439011')
+                .set('x-access-token', userData.token)
+                .end((err, res) => {
+                    res.should.have.status(httpStatus.NOT_FOUND);
+                    done();
+                });
+        });
+
+        it('should send success when data deleted', (done) => {
+            chai.request(server).delete('/api/v1/job_applicant/delete/' + testData.id)
+                .set('x-access-token', userData.token)
+                .end((err, res) => {
+                    res.should.have.status(httpStatus.OK);
+                    done();
+                });
+        });
+    });
 });
