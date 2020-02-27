@@ -8,13 +8,13 @@ const httpStatus = require('http-status');
  * @return http-status OK
  */
 exports.successResponse = function (res, message, result) {
-    const results = {
-        status: 'success',
-        message: message,
-        result: result
-    };
+	const results = {
+		status: 'success',
+		message: message,
+		result: result
+	};
 
-    return res.status(httpStatus.OK).send(results);
+	return res.status(httpStatus.OK).send(results);
 };
 
 /**
@@ -25,13 +25,13 @@ exports.successResponse = function (res, message, result) {
  * @return http-status CREATED
  */
 exports.createdResponse = function (res, message, result) {
-    const results = {
-        status: 'success',
-        message: message,
-        result: result
-    };
+	const results = {
+		status: 'success',
+		message: message,
+		result: result
+	};
 
-    return res.status(httpStatus.CREATED).send(results);
+	return res.status(httpStatus.CREATED).send(results);
 };
 
 /**
@@ -42,13 +42,13 @@ exports.createdResponse = function (res, message, result) {
  * @return http-stattus INTERNAL SERVER ERROR
  */
 exports.errorResponse = function (res, message, result) {
-    const results = {
-        status: 'error',
-        message: message,
-        result: result
-    };
+	const results = {
+		status: 'error',
+		message: message,
+		result: result
+	};
 
-    return res.status(httpStatus.INTERNAL_SERVER_ERROR).send(results);
+	return res.status(httpStatus.INTERNAL_SERVER_ERROR).send(results);
 };
 
 /**
@@ -58,13 +58,13 @@ exports.errorResponse = function (res, message, result) {
  * @return http-status NOT FOUND
  */
 exports.notFoundResponse = function (res, message) {
-    const results = {
-        status: 'error',
-        message: message,
-        result: []
-    };
+	const results = {
+		status: 'error',
+		message: message,
+		result: []
+	};
 
-    return res.status(httpStatus.NOT_FOUND).send(results);
+	return res.status(httpStatus.NOT_FOUND).send(results);
 };
 
 /**
@@ -75,13 +75,13 @@ exports.notFoundResponse = function (res, message) {
  * @return http-status UNPROCESSABLE ENTITY
  */
 exports.unprocessableResponse = function (res, message, result) {
-    const results = {
-        status: 'error',
-        message: message,
-        result: result
-    };
+	const results = {
+		status: 'error',
+		message: message,
+		result: result
+	};
 
-    return res.status(httpStatus.UNPROCESSABLE_ENTITY).send(results);
+	return res.status(httpStatus.UNPROCESSABLE_ENTITY).send(results);
 };
 
 /**
@@ -91,13 +91,13 @@ exports.unprocessableResponse = function (res, message, result) {
  * @return http-status CONFLICT
  */
 exports.conflictResponse = function (res, message) {
-    const results = {
-        status: 'error',
-        message: message,
-        result: []
-    };
+	const results = {
+		status: 'error',
+		message: message,
+		result: []
+	};
 
-    return res.status(httpStatus.CONFLICT).send(results);
+	return res.status(httpStatus.CONFLICT).send(results);
 };
 
 /**
@@ -107,13 +107,13 @@ exports.conflictResponse = function (res, message) {
  * @return http-status UNAUTHORIZED
  */
 exports.unauthorizedResponse = function (res, message) {
-    const results = {
-        status: 'error',
-        message: message,
-        result: []
-    };
+	const results = {
+		status: 'error',
+		message: message,
+		result: []
+	};
 
-    return res.status(httpStatus.UNAUTHORIZED).send(results);
+	return res.status(httpStatus.UNAUTHORIZED).send(results);
 };
 
 /**
@@ -123,13 +123,13 @@ exports.unauthorizedResponse = function (res, message) {
  * @return http-status FORBIDDEN
  */
 exports.forbiddenResponse = function (res, message) {
-    const results = {
-        status: 'error',
-        message: message,
-        result: []
-    };
+	const results = {
+		status: 'error',
+		message: message,
+		result: []
+	};
 
-    return res.status(httpStatus.FORBIDDEN).send(results);
+	return res.status(httpStatus.FORBIDDEN).send(results);
 };
 
 /**
@@ -140,11 +140,11 @@ exports.forbiddenResponse = function (res, message) {
  * @return http-status BAD REQUEST
  */
 exports.badRequestResponse = function (res, message, result) {
-    const results = {
-        status: 'error',
-        message: message,
-        result: result
-    };
+	const results = {
+		status: 'error',
+		message: message,
+		result: result
+	};
 
-    return res.status(httpStatus.BAD_REQUEST).send(results);
+	return res.status(httpStatus.BAD_REQUEST).send(results);
 };

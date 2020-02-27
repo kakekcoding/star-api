@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node ./api/server",
     "dev": "nodemon ./api/server",
-    "test": "cross-env NODE_ENV=tests nyc mocha --timeout 10000 --exit --recursive -reporter=lcov -- -R spec ./api/tests/**/*js"
+    "test": "cross-env NODE_ENV=tests nyc mocha --timeout 10000 --exit --recursive -reporter=lcov -- -R spec ./api/tests/**/*js",
+    "lint": "eslint ./api/ --fix --ignore-path .gitignore --ignore-pattern internals/scripts"
   },
   "author": "Ahmad Rifa'i",
   "license": "MIT",
@@ -25,6 +26,7 @@
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "cross-env": "^7.0.0",
+    "eslint": "^6.8.0",
     "mocha": "^7.0.1",
     "nodemon": "^2.0.2",
     "nyc": "^15.0.0"

@@ -15,13 +15,13 @@ app.use('/api/v1', apiRouter);
 
 // throw 404 if url not found
 app.all('*', (req, res) => {
-    return apiResponse.notFoundResponse(res, 'page not found');
+	return apiResponse.notFoundResponse(res, 'page not found');
 });
 
-const PORT = process.env.PORT
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
-    console.log('Starting...');
-    console.log(`Server started on http://localhost:${PORT}`);
+	console.log('Starting...');
+	console.log(`Server started on http://localhost:${PORT}`);
 });
 
 module.exports = app;
