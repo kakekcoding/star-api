@@ -1,0 +1,7 @@
+version: '3.7'
+
+services:
+  star-hrd:
+    command: npm test
+    environment: 
+      - NODE_ENV=tests

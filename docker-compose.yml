@@ -1,0 +1,24 @@
+version: '3.7'
+
+services:
+  star-hrd:
+    image: star-hrd-node
+    container_name: star-hrd-node
+    build: .
+    restart: always
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - DATABASE_URL_TESTS=${DATABASE_URL_TESTS} 
+      - PORT=${PORT}
+      - JWT_KEY=${JWT_KEY}
+      - JWT_EXPIRATION_TIME=120000
+    ports:
+      - 8000:${PORT}
+    depends_on: 
+      - mongodb
+  
+  mongodb:
+    container_name: mongodb
+    image: mongo:4.2.3
+    ports: 
+      - 27017:27017
