@@ -32,4 +32,11 @@ jobs:
     - stage: test
       script: npm test
     - stage: deploy
-      script: npm run deploy
+      before_install:
+        - openssl aes-256-cbc -K $encrypted_xxxxxx_key -iv $encrypted_xxxxxx_iv
+          -in travis.enc -out travis -d
+        - chmod 600 travis
+        - mv travis ~/.ssh/id_rsa
+        - cat server.pub >> $HOME/.ssh/known_hosts
+      after_success:
+        - npm run deploy
