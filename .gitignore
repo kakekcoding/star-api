@@ -62,3 +62,7 @@ typings/
 
 #vs code configurations
 .vscode/
+
+# Ignoring travis_rsa
+travis_rsa
+travis_rsa.pub
