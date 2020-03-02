@@ -30,7 +30,6 @@ branches:
 
 jobs:
   include: 
-    if: branch = deploy
     - stage: test
       script: npm test
     - stage: deploy
