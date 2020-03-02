@@ -21,9 +21,6 @@ env:
   - JWT_KEY=221b368d7f5f597867f525971f28ff75
   - JWT_EXPIRATION_TIME='30m'
 
-addons:
-  ssh_known_hosts: $HOST
-
 branches:
   only:
   - master

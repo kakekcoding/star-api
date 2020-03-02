@@ -1,9 +1,11 @@
 #!/bin/bash
 
 eval "$(ssh-agent -s)"
-echo -e "Host $HOST\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 
-ssh deploy@$HOST <<EOF
+# testing connection travis-ci on server
+ssh -i travis_rsa deploy@HOST pwd
+
+ssh deploy@$HOST pwd <<EOF
   cd $DEPLOY_DIR
   npm run
 EOF
