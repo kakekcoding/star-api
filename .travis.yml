@@ -20,7 +20,6 @@ env:
   - PORT=8080
   - JWT_KEY=221b368d7f5f597867f525971f28ff75
   - JWT_EXPIRATION_TIME='30m'
-  - secure: $SECURE
 
 addons:
   ssh_known_hosts: $HOST
