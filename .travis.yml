@@ -1,10 +1,9 @@
-sudo: true
 language: node_js
 
 cache:
   directories:
-  - ~/.npm
-
+  - "~/.npm"
+  
 os:
   - linux
 
@@ -15,28 +14,32 @@ services: mongodb
 
 env:
   global:
-    - NODE_ENV=tests
-    - DATABASE_URL=mongodb://127.0.0.1/star
-    - DATABASE_URL_TESTS=mongodb://127.0.0.1/star_test
-    - PORT=8080
-    - JWT_KEY=221b368d7f5f597867f525971f28ff75
-    - JWT_EXPIRATION_TIME='30m'
+  - NODE_ENV=tests
+  - DATABASE_URL=mongodb://127.0.0.1/star
+  - DATABASE_URL_TESTS=mongodb://127.0.0.1/star_test
+  - PORT=8080
+  - JWT_KEY=221b368d7f5f597867f525971f28ff75
+  - JWT_EXPIRATION_TIME='30m'
+
+addons:
+  ssh_known_hosts: $HOST
 
 branches:
   only:
-    - master
-    - deploy
+  - master
+  - deploy
+
+before_install:
+  - openssl aes-256-cbc -K $encrypted_2b858b0ce8fa_key -iv $encrypted_2b858b0ce8fa_iv
+    -in travis_rsa.enc -out travis_rsa -d
+  - chmod 600 ~/.ssh/travis_rsa
 
 jobs:
-  include: 
-    - stage: test
-      script: npm test
-    - stage: deploy
-      before_install:
-        - openssl aes-256-cbc -K $encrypted_xxxxxx_key -iv $encrypted_xxxxxx_iv
-          -in travis.enc -out travis -d
-        - chmod 600 travis
-        - mv travis ~/.ssh/id_rsa
-        - cat server.pub >> $HOME/.ssh/known_hosts
-      after_success:
-        - npm run deploy
+  include:
+  - stage: test
+    script: npm test
+  - stage: deploy
+  - skip_cleanup: true
+    script: npm run deploy
+    on:
+      branch: deploy
