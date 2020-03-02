@@ -23,6 +23,11 @@ env:
     - JWT_KEY=221b368d7f5f597867f525971f28ff75
     - JWT_EXPIRATION_TIME='30m'
 
+branches:
+  only:
+    - master
+    - deploy
+
 jobs:
   include: 
     if: branch = deploy
