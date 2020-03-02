@@ -14,10 +14,6 @@ node_js:
 
 services: mongodb
 
-branches:
-  only:
-    - master
-
 env:
   global:
     - NODE_ENV=tests
@@ -25,7 +21,20 @@ env:
     - DATABASE_URL_TESTS=mongodb://127.0.0.1/star_test
     - PORT=8080
     - JWT_KEY=221b368d7f5f597867f525971f28ff75
-    - JWT_EXPIRATION_TIME='2m'
+    - JWT_EXPIRATION_TIME='30m'
+
+branches:
+  only:
+    - master
+    - deploy
+
+jobs:
+  include: 
+    if: branch = deploy
+    - stage: test
+      script: npm test
+    - stage: deploy
+      script: npm run deploy
 
 cache:
   directories:
