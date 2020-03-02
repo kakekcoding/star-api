@@ -39,5 +39,4 @@ jobs:
   - stage: test
     script: npm test
   - stage: deploy
-  skip_cleanup: true
     script: npm run deploy
