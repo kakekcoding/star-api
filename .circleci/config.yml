@@ -25,6 +25,7 @@ jobs:
           name: Setup Environment Variables
           command: |
             export NODE_ENV=tests
+            export DATABASE_URL=mongodb://127.0.0.1/star
             export DATABASE_URL_TESTS=mongodb://127.0.0.1/star_test
             export PORT=8080
             export JWT_KEY=221b368d7f5f597867f525971f28ff75
@@ -56,10 +57,6 @@ jobs:
           command: | 
             chmod +x deploy.sh
             ssh-keyscan $HOST >> ~/.ssh/known_hosts
-
-      - run:
-          name: Setup Environment Variable
-          command: export DATABASE_URL=mongodb://127.0.0.1/star
 
       - run:
           name: Run Deploy
