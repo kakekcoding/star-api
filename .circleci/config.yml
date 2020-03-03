@@ -31,6 +31,7 @@ jobs:
     working_directory: ~/star-hrd
 
     docker:
+      - image: circleci/node:10.16.2
       - image: circleci/mongo:4.0-xenial-ram
     
     steps:
