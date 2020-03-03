@@ -8,7 +8,7 @@ jobs:
 
     docker:
       - image: circleci/node:10.16.2
-      - image: circleci/mongo:latest
+      - image: circleci/mongo:4.0-xenial-ram
 
     add_ssh_keys:
       fingerprints:
@@ -35,11 +35,25 @@ jobs:
       - run: 
           name: Install module
           command: npm ci
-
+  
+  test:
+    steps:
+      - checkout
       - run: 
           name: Tests
           command: npm test
-      
+
+  deploy:
+    steps:
+      - checkout
       - run:
           name: Deploy
           command: ./deploy.sh
+  
+workflows: 
+  version: 2
+  workflow:
+    jobs:
+      - build
+      - test
+      - deploy
