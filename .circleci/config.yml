@@ -14,7 +14,7 @@ jobs:
       fingerprints:
         - "33:a5:c5:02:37:63:00:b9:d5:0a:bf:be:3b:2b:e5:c0"
     
-    working_directory: ~/ahmadrifai
+    working_directory: ~/star-hrd
 
     environment:
       NODE_ENV: tests
