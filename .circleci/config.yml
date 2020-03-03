@@ -7,6 +7,15 @@ jobs:
     docker:
       - image: circleci/node:10.16.3
       - image: mongo:4.2.3
+    
+    # Setup environmet variables
+    environment:
+      NODE_ENV: tests
+      DATABASE_URL: mongodb://127.0.0.1/star
+      DATABASE_URL_TESTS: mongodb://127.0.0.1/star_test
+      PORT: 8080
+      JWT_KEY: 221b368d7f5f597867f525971f28ff75
+      JWT_EXPIRATION_TIME: '15m'
 
     steps:
       - checkout
@@ -20,16 +29,6 @@ jobs:
       - run:
           name: Install Dependencies
           command: npm ci
-
-      - run: 
-          name: Setup Environment Variables
-          command: |
-            export NODE_ENV=tests
-            export DATABASE_URL=mongodb://127.0.0.1/star
-            export DATABASE_URL_TESTS=mongodb://127.0.0.1/star_test
-            export PORT=8080
-            export JWT_KEY=221b368d7f5f597867f525971f28ff75
-            export JWT_EXPIRATION_TIME='15m'
     
       - run: 
           name: Run Test & Coverage
