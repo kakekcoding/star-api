@@ -1,45 +1,75 @@
 version: 2
 jobs:
   build:
-    branches:
-      only:
-        - master
-        - deploy
+    name: Build
+    working_directory: ~/star-hrd
 
     docker:
       - image: circleci/node:10.16.2
-      - image: circleci/mongo:4.0-xenial-ram
 
     add_ssh_keys:
       fingerprints:
         - "33:a5:c5:02:37:63:00:b9:d5:0a:bf:be:3b:2b:e5:c0"
-    
-    working_directory: ~/star-hrd
-
-    environment:
-      NODE_ENV: tests
-      DATABASE_URL: mongodb://127.0.0.1/star
-      DATABASE_URL_TESTS: mongodb://127.0.0.1/star_test
-      PORT: 8080
-      JWT_KEY: 221b368d7f5f597867f525971f28ff75
-      JWT_EXPIRATION_TIME: '10m'
 
     steps:
       - checkout
-      - run: 
+      - run:
           name: Setup
           command: | 
             chmod 755 deploy.sh
             ssh-keyscan $HOST >> ~/.ssh/known_hosts
 
-      - run: 
+      - run:
           name: Install module
           command: npm ci
 
+      - setup_remote_docker:
+          reusable: true
+
+  test:
+    name: Unit testing & coverage
+    working_directory: ~/star-hrd
+
+    docker:
+      - image: circleci/mongo:4.0-xenial-ram
+    
+    steps:
+      - checkout
       - run: 
-          name: Tests
+          name: Setup environment variables
+          command: |
+            export NODE_ENV=tests
+            export DATABASE_URL_TESTS=mongodb://127.0.0.1/star_test
+            export PORT=8080
+            export JWT_KEY=221b368d7f5f597867f525971f28ff75
+            export JWT_EXPIRATION_TIME='10m'
+
+      - run: 
+          name: Run test & coverage
           command: npm test
-      
+  
+  deploy:
+    name: Deploy to AWS
+    working_directory: ~/star-hrd
+
+    steps:
+      - checkout
       - run:
-          name: Deploy
+          name: Setup environment variable
+          command: export DATABASE_URL=mongodb://127.0.0.1/star
+
+      - run:
+          name: Run deploy
           command: ./deploy.sh
+
+workflows:
+  version: 2
+  test-and-deploy:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - deploy:
+          requires:
+            - test
