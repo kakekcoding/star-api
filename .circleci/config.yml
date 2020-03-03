@@ -48,6 +48,14 @@ jobs:
             export PORT=8080
             export JWT_KEY=221b368d7f5f597867f525971f28ff75
             export JWT_EXPIRATION_TIME='15m'
+      
+      - run:
+        name: Install npm
+        command: sudo apt-get install npm
+
+      - run:
+        name: Check npm version
+        command: npm --version
 
       - run: 
           name: Run test & coverage
