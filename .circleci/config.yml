@@ -4,53 +4,43 @@ jobs:
     name: Build
     working_directory: ~/star-hrd
 
-    # vCPUs 4, RAM 8GB. See more https://circleci.com/docs/2.0/configuration-reference/#resource_class
-    resource_class: large
-
     docker:
       - image: circleci/node:10.16.3
+      - image: mongo:4.2.3
 
     steps:
       - checkout
       - run:
-          name: Check npm version
+          name: Check NPM Version
           command: npm --version
       
       - restore_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }}
 
       - run:
-          name: Install dependencies
+          name: Install Dependencies
           command: npm ci
-      
-      - save_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
-          paths:
-            - ~/.npm
 
-  test:
-    name: Unit testing & coverage
-    working_directory: ~/star-hrd
-
-    docker:
-      - image: mongo:4.2.3
-    
-    steps:
       - run: 
-          name: Setup environment variables
+          name: Setup Environment Variables
           command: |
             export NODE_ENV=tests
             export DATABASE_URL_TESTS=mongodb://127.0.0.1/star_test
             export PORT=8080
             export JWT_KEY=221b368d7f5f597867f525971f28ff75
             export JWT_EXPIRATION_TIME='15m'
-      
+    
       - run: 
-          name: Run test & coverage
+          name: Run Test & Coverage
           command: npm test
+      
+      - save_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ~/.npm 
   
   deploy:
-    name: Deploy to SSH server
+    name: Deploy to SSH Server
     working_directory: ~/star-hrd
 
     docker:
@@ -68,11 +58,11 @@ jobs:
             ssh-keyscan $HOST >> ~/.ssh/known_hosts
 
       - run:
-          name: Setup environment variable
+          name: Setup Environment Variable
           command: export DATABASE_URL=mongodb://127.0.0.1/star
 
       - run:
-          name: Run deploy
+          name: Run Deploy
           command: npm run deploy
 
 workflows:
@@ -80,9 +70,6 @@ workflows:
   test-and-deploy:
     jobs:
       - build
-      - test:
-          requires:
-            - build
       - deploy:
           requires:
             - test
