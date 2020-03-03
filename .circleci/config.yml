@@ -50,12 +50,12 @@ jobs:
             export JWT_EXPIRATION_TIME='15m'
       
       - run:
-        name: Install npm
-        command: 'sudo apt-get install npm'
+          name: Install npm
+          command: sudo apt-get install npm
 
       - run:
-        name: Check npm version
-        command: npm --version
+          name: Check npm version
+          command: npm --version
 
       - run: 
           name: Run test & coverage
