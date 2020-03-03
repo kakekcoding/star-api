@@ -4,21 +4,14 @@ jobs:
     name: Build
     working_directory: ~/star-hrd
 
+    # vCPUs 4, RAM 8GB. See more https://circleci.com/docs/2.0/configuration-reference/#resource_class
+    resource_class: large
+
     docker:
       - image: circleci/node:10.16.3
 
-    add_ssh_keys:
-      fingerprints:
-        - "33:a5:c5:02:37:63:00:b9:d5:0a:bf:be:3b:2b:e5:c0"
-
     steps:
       - checkout
-      - run:
-          name: Setup
-          command: | 
-            chmod +x deploy.sh
-            ssh-keyscan $HOST >> ~/.ssh/known_hosts
-
       - run:
           name: Check npm version
           command: npm --version
@@ -41,7 +34,6 @@ jobs:
 
     docker:
       - image: mongo:4.2.3
-      - image: circleci/node:10.16.3
     
     steps:
       - run: 
@@ -63,8 +55,18 @@ jobs:
 
     docker:
       - image: mongo:4.2.3
+    
+    add_ssh_keys:
+      fingerprints:
+        - "33:a5:c5:02:37:63:00:b9:d5:0a:bf:be:3b:2b:e5:c0"
 
     steps:
+      - run:
+          name: Setup
+          command: | 
+            chmod +x deploy.sh
+            ssh-keyscan $HOST >> ~/.ssh/known_hosts
+
       - run:
           name: Setup environment variable
           command: export DATABASE_URL=mongodb://127.0.0.1/star
