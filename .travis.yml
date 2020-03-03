@@ -8,6 +8,7 @@ os:
   - linux
 
 node_js:
+  - '12'
   - '10'
 
 services: mongodb
@@ -20,25 +21,36 @@ env:
   - PORT=8080
   - JWT_KEY=221b368d7f5f597867f525971f28ff75
   - JWT_EXPIRATION_TIME='30m'
-  - secure: $SECURE
-
-addons:
-  ssh_known_hosts: $HOST
 
 branches:
   only:
   - master
   - deploy
 
-before_install:
-  - openssl aes-256-cbc -K $encrypted_2b858b0ce8fa_key -iv $encrypted_2b858b0ce8fa_iv 
-    -in travis_rsa.enc -out travis_rsa -d
-  - chmod 600 ~/.ssh/travis_rsa
+stages:
+  - test
 
 jobs:
   include:
   - stage: test
     script: npm test
-  - stage: deploy
-  skip_cleanup: true
-    script: npm run deploy
+
+deploy:
+  provider: s3
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
+    secure: $SECURE
+  bucket: starHrd
+  acl: public_read
+  region: ap-southeast-1
+  on:
+    repo: arifai/star
+    branch: deploy
+
+  provider: codedeploy
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
+  bucket: starHrd
+  application: StarHrd
+  deployment_group: starHrd
+  region: ap-southeast-1
