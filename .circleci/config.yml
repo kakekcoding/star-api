@@ -51,6 +51,7 @@ jobs:
         - "33:a5:c5:02:37:63:00:b9:d5:0a:bf:be:3b:2b:e5:c0"
 
     steps:
+      - checkout
       - run:
           name: Setup
           command: | 
