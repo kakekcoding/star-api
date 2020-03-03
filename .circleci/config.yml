@@ -20,11 +20,15 @@ jobs:
             ssh-keyscan $HOST >> ~/.ssh/known_hosts
 
       - run:
+          name: Check npm version
+          command: npm --version
+
+      - run:
           name: Install dependencies
           command: npm ci
       
       - save_cache:
-          key: node
+          key: dependency-cache-{{ checksum "package-lock.json" }}
           paths:
             - ~/.npm
 
@@ -36,7 +40,6 @@ jobs:
       - image: circleci/mongo:4.0-xenial-ram
     
     steps:
-      - checkout
       - run: 
           name: Setup environment variables
           command: |
@@ -54,8 +57,10 @@ jobs:
     name: Deploy to SSH server
     working_directory: ~/star-hrd
 
+    docker:
+      - image: circleci/mongo:4.0-xenial-ram
+
     steps:
-      - checkout
       - run:
           name: Setup environment variable
           command: export DATABASE_URL=mongodb://127.0.0.1/star
