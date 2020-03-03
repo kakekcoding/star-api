@@ -28,7 +28,7 @@ jobs:
           command: | 
             chmod 755 deploy.sh
             ssh-keyscan $HOST >> ~/.ssh/known_hosts
-            
+
       - run:
           name: Check NPM Version
           command: npm --version
@@ -43,30 +43,12 @@ jobs:
       - run: 
           name: Run Test & Coverage
           command: npm test
+
+      - run:
+          name: Run Deploy
+          command: npm run deploy
       
       - save_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }}
           paths:
             - ~/.npm 
-  
-  deploy:
-    name: Deploy to SSH Server
-    working_directory: ~/star-hrd
-
-    docker:
-      - image: mongo:4.2.3
-
-    steps:
-      - checkout
-      - run:
-          name: Run Deploy
-          command: npm run deploy
-
-workflows:
-  version: 2
-  test-and-deploy:
-    jobs:
-      - build
-      - deploy:
-          requires:
-            - build
