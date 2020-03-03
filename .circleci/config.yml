@@ -41,6 +41,7 @@ jobs:
 
     docker:
       - image: mongo:4.2.3
+      - image: circleci/node:10.16.3
     
     steps:
       - run: 
@@ -61,7 +62,7 @@ jobs:
     working_directory: ~/star-hrd
 
     docker:
-      - image: circleci/mongo:4.0-xenial-ram
+      - image: mongo:4.2.3
 
     steps:
       - run:
