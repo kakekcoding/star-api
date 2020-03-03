@@ -38,7 +38,7 @@ deploy:
   secret_access_key: $AWS_SECRET_KEY
     secure: 0gLC1vcacRl7l/kHHE1kqfSlEmlsEovAr+ubj5IebByuAJnm8d/nO38Oeta2OgI4gIFXwxtmHA0RIiUC6gOu8CB2qqDzHjLQ6o3AqzEbVCVz0k8U5GVoTlm3NPQ6cZfvUvvofJ/YCZsGHKu7BKAAsGP9ROE/QlsdfgXuK7MQtngwgUDoSPZWVVXbVluDFDZw+55IFBZ6oIy5WOSzyYcRYbxb8Rd6vkPDHkA1S0AsQXLHE80Wsz4mKkQUMA/XF0CfajzH0Zk/PvH+5OuKdgqNN/JlM8XgnKT7O952QSFaqK9QkD6rkOltUtktfCXesH40WObWHkOh21Ses1hPm1lKWte5n3cbrcVlXsKC0y0MGE3aqD9B5wZDsjqieQbzPjeP6dopM+cc1rDqFb1kEHqISTxXpzelEEd4mGQoFZu5A89733/ZLeY0K3kV+jWdtWX5+o7U/Vx+DInGnMtCP8mcsiLrCMMEhP4dld+jJY2X11Pzj5l0qDEvF28Cii/i9b7lf3KzqShRzGkELurE0HHsX08kaj2G9IfBM/a8prjT6hFhfqA6pPze57zZ7i+50AU103kSInL6RUaQz8VMIeuDkmwUN1HSV0j9y5DnCuUqCu0syn+2wuzLkNijr0i84vT9tZUTuaAJh08EA20FqfqM3PrZoDXRuWD/9wBxJCTLZ0w=
   bucket: starHrd
-  local-dir: arifai/star
+  # local-dir: arifai/star
   upload-dir: arifai/star
   skip_cleanup: true
   on:
