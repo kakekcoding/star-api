@@ -11,7 +11,7 @@ git config --global user.email "arifai209@gmail.com"
 git init .
 git add .
 git commit -m "Deploying"
-git remote add deploy ssh://ubuntu@$HOST/~/ahmadrifai
+git remote add deploy ssh://ubuntu@$HOST/~/ahmadrifai.git
 git push --force deploy deploy
 
-ssh ubuntu@HOST "cd ~/ahmadrifai/ && npm install && npm run"
+ssh ubuntu@HOST "cd ~/ahmadrifai.git/ && npm install && npm run"
