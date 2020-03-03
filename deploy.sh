@@ -12,6 +12,6 @@ git init .
 git add .
 git commit -m "Deploying"
 git remote add deploy ssh://ubuntu@$HOST/~/ahmadrifai.git
-git push --force deploy deploy
+git push -u deploy master
 
 ssh ubuntu@HOST "cd ~/ahmadrifai.git/ && npm install && npm run"
