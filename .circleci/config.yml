@@ -4,6 +4,10 @@ jobs:
     name: Build
     working_directory: ~/star-hrd
 
+    add_ssh_keys:
+      fingerprints:
+        - "33:a5:c5:02:37:63:00:b9:d5:0a:bf:be:3b:2b:e5:c0"
+
     docker:
       - image: circleci/node:10.16.3
       - image: mongo:4.2.3
@@ -19,6 +23,12 @@ jobs:
 
     steps:
       - checkout
+      - run:
+          name: Setup
+          command: | 
+            chmod 755 deploy.sh
+            ssh-keyscan $HOST >> ~/.ssh/known_hosts
+            
       - run:
           name: Check NPM Version
           command: npm --version
@@ -45,19 +55,9 @@ jobs:
 
     docker:
       - image: mongo:4.2.3
-    
-    add_ssh_keys:
-      fingerprints:
-        - "33:a5:c5:02:37:63:00:b9:d5:0a:bf:be:3b:2b:e5:c0"
 
     steps:
       - checkout
-      - run:
-          name: Setup
-          command: | 
-            chmod 755 deploy.sh
-            ssh-keyscan $HOST >> ~/.ssh/known_hosts
-
       - run:
           name: Run Deploy
           command: npm run deploy
