@@ -20,18 +20,14 @@ jobs:
             ssh-keyscan $HOST >> ~/.ssh/known_hosts
 
       - run:
-          name: Install module
+          name: Install dependencies
           command: npm ci
-
-      - setup_remote_docker:
-          reusable: true
 
   test:
     name: Unit testing & coverage
     working_directory: ~/star-hrd
 
     docker:
-      - image: circleci/node:10.16.2
       - image: circleci/mongo:4.0-xenial-ram
     
     steps:
@@ -50,11 +46,10 @@ jobs:
           command: npm test
   
   deploy:
-    name: Deploy to AWS
+    name: Deploy to SSH server
     working_directory: ~/star-hrd
 
     docker:
-      - image: circleci/node:10.16.2
       - image: circleci/mongo:4.0-xenial-ram
 
     steps:
@@ -65,7 +60,7 @@ jobs:
 
       - run:
           name: Run deploy
-          command: ./deploy.sh
+          command: npm run deploy
 
 workflows:
   version: 2
