@@ -10,6 +10,12 @@ jobs:
       - image: circleci/node:10.16.2
       - image: circleci/mongo:latest
 
+    add_ssh_keys:
+      fingerprints:
+        - "33:a5:c5:02:37:63:00:b9:d5:0a:bf:be:3b:2b:e5:c0"
+    
+    working_directory: ~/ahmadrifai
+
     environment:
       NODE_ENV: tests
       DATABASE_URL: mongodb://127.0.0.1/star
@@ -18,18 +24,22 @@ jobs:
       JWT_KEY: 221b368d7f5f597867f525971f28ff75
       JWT_EXPIRATION_TIME: '10m'
 
-    working_directory: ~/public
-
     steps:
       - checkout
-      - run: sudo npm i -g npm@latest
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            
-      - run: npm install
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-      - run: npm test
+      - run: 
+          name: Setup
+          command: | 
+            chmod 755 deploy.sh
+            ssh-keyscan $HOST >> ~/.ssh/known_hosts
+
+      - run: 
+          name: Install module
+          command: npm ci
+
+      - run: 
+          name: Tests
+          command: npm test
+      
+      - run:
+          name: Deploy
+          command: ./deploy.sh
