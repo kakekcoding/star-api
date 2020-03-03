@@ -36,21 +36,21 @@ jobs:
     script: npm test
 
 deploy:
-  provider: s3
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_SECRET_KEY
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
     secure: $SECURE
-  bucket: starHrd
-  acl: public_read
-  region: ap-southeast-1
-  on:
-    repo: arifai/star
-    branch: deploy
+    bucket: starHrd
+    acl: public_read
+    region: ap-southeast-1
+    on:
+      repo: arifai/star
+      branch: deploy
 
-  provider: codedeploy
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_SECRET_KEY
-  bucket: starHrd
-  application: StarHrd
-  deployment_group: starHrd
-  region: ap-southeast-1
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: starHrd
+    application: StarHrd
+    deployment_group: starHrd
+    region: ap-southeast-1
