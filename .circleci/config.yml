@@ -16,12 +16,17 @@ jobs:
       - run:
           name: Setup
           command: | 
-            chmod 755 deploy.sh
+            chmod +x deploy.sh
             ssh-keyscan $HOST >> ~/.ssh/known_hosts
 
       - run:
           name: Install dependencies
           command: npm ci
+      
+      - save_cache:
+          key: node
+          paths:
+            - ~/.npm
 
   test:
     name: Unit testing & coverage
@@ -39,7 +44,7 @@ jobs:
             export DATABASE_URL_TESTS=mongodb://127.0.0.1/star_test
             export PORT=8080
             export JWT_KEY=221b368d7f5f597867f525971f28ff75
-            export JWT_EXPIRATION_TIME='10m'
+            export JWT_EXPIRATION_TIME='15m'
 
       - run: 
           name: Run test & coverage
@@ -48,9 +53,6 @@ jobs:
   deploy:
     name: Deploy to SSH server
     working_directory: ~/star-hrd
-
-    docker:
-      - image: circleci/mongo:4.0-xenial-ram
 
     steps:
       - checkout
