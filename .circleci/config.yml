@@ -5,9 +5,11 @@ jobs:
       only:
         - master
         - deploy
+
     docker:
       - image: circleci/node:10.16.2
       - image: circleci/mongo:latest
+
     environment:
       NODE_ENV: tests
       DATABASE_URL: mongodb://127.0.0.1/star
@@ -15,13 +17,16 @@ jobs:
       PORT: 8080
       JWT_KEY: 221b368d7f5f597867f525971f28ff75
       JWT_EXPIRATION_TIME: '10m'
+
     working_directory: ~/public
+
     steps:
       - checkout
       - run: sudo npm i -g npm@latest
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
+            
       - run: npm install
       - save_cache:
           paths:
