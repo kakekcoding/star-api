@@ -5,7 +5,7 @@ jobs:
     working_directory: ~/star-hrd
 
     docker:
-      - image: circleci/node:10.16.2
+      - image: circleci/node:10.16.3
 
     add_ssh_keys:
       fingerprints:
@@ -22,6 +22,9 @@ jobs:
       - run:
           name: Check npm version
           command: npm --version
+      
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
 
       - run:
           name: Install dependencies
@@ -37,7 +40,7 @@ jobs:
     working_directory: ~/star-hrd
 
     docker:
-      - image: circleci/mongo:4.0-xenial-ram
+      - image: mongo:4.2.3
     
     steps:
       - run: 
@@ -49,14 +52,6 @@ jobs:
             export JWT_KEY=221b368d7f5f597867f525971f28ff75
             export JWT_EXPIRATION_TIME='15m'
       
-      - run:
-          name: Install npm
-          command: sudo apt-get install npm
-
-      - run:
-          name: Check npm version
-          command: npm --version
-
       - run: 
           name: Run test & coverage
           command: npm test
