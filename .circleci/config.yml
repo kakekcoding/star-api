@@ -1,6 +1,11 @@
 version: 2
 jobs:
   build:
+    branches:
+      only:
+        - master
+        - deploy
+        
     working_directory: ~/star-hrd
 
     add_ssh_keys:
