@@ -55,7 +55,6 @@ jobs:
     working_directory: ~/star-hrd
 
     docker:
-      - image: circleci/node:10.16.3
       - image: mongo:4.2.3
 
     steps:
