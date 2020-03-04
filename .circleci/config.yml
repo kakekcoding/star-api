@@ -1,84 +1,77 @@
-version: 2
+version: 2.1
+
+executors:
+    my-executors:
+        docker:
+            - image: circleci/node:10.16.3
+            - image: mongo:4.2.3
+        working_directory: ~/star-hrd
+
 jobs:
-  node:
-    working_directory: ~/star-hrd
+    build:
+        executors: my-executors
 
-    add_ssh_keys:
-      fingerprints:
-        - "33:a5:c5:02:37:63:00:b9:d5:0a:bf:be:3b:2b:e5:c0"
-
-    docker:
-      - image: circleci/node:10.16.3
+        add_ssh_keys:
+        fingerprints:
+            - "33:a5:c5:02:37:63:00:b9:d5:0a:bf:be:3b:2b:e5:c0"
     
-    # Setup environment variables
-    environment:
-      NODE_ENV: tests
-      DATABASE_URL: mongodb://127.0.0.1/star
-      DATABASE_URL_TESTS: mongodb://127.0.0.1/star_test
-      PORT: 8080
-      JWT_KEY: 221b368d7f5f597867f525971f28ff75
-      JWT_EXPIRATION_TIME: '15m'
+        # Setup environment variables
+        environment:
+        NODE_ENV: tests
+        DATABASE_URL: mongodb://127.0.0.1/star
+        DATABASE_URL_TESTS: mongodb://127.0.0.1/star_test
+        PORT: 8080
+        JWT_KEY: 221b368d7f5f597867f525971f28ff75
+        JWT_EXPIRATION_TIME: '15m'
 
-    steps:
-      - checkout
+        steps:
+        - run:
+            name: Setup
+            command: | 
+                chmod 755 deploy.sh
+                ssh-keyscan $HOST >> ~/.ssh/known_hosts
 
-      - run:
-          name: Setup
-          command: | 
-            chmod 755 deploy.sh
-            ssh-keyscan $HOST >> ~/.ssh/known_hosts
+        - restore_cache:
+            key: dependency-cache-{{ checksum "package-lock.json" }}
 
-      - run:
-          name: Check NPM Version
-          command: npm --version
-      
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
+        - run:
+            name: Check NPM Version
+            command: npm --version
 
-      - run:
-          name: Install Dependencies
-          command: npm ci
+        - run:
+            name: Install Dependencies
+            command: npm ci
 
-      - save_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
-          paths:
-            - ~/.npm 
-  
-  test:
-    working_directory: ~/star-hrd
+        - save_cache:
+            key: dependency-cache-{{ checksum "package-lock.json" }}
+            paths:
+                - ~/.npm 
+    
+    test:
+        executors: my-executors
 
-    docker:
-      - image: mongo:4.2.3
+        steps:
+        - run: 
+            name: Run Test & Coverage
+            command: npm test
 
-    steps:
-      # - checkout
+    deploy:
+        executors: my-executors
 
-      - run: 
-          name: Run Test & Coverage
-          command: npm test
-
-  deploy:
-    working_directory: ~/star-hrd
-
-    docker:
-      - image: mongo:4.2.3
-
-    steps:
-      # - checkout
-
-      - run:
-          name: Run Deploy
-          command: npm run deploy
-      
+        steps:
+        - run:
+            name: Run Deploy
+            command: npm run deploy
+        
 workflows:
-  version: 2
-  node-test-deploy:
-    jobs:
-      - node
-      - test:
-          requires:
-            - node
-      - deploy:
-          requires:
-            - node
-            - test
+    version: 2
+    build-test-deploy:
+        jobs:
+        - build
+        - test:
+            requires:
+                - build
+        - deploy:
+            requires:
+                - build
+                - test
