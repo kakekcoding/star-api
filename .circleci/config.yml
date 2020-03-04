@@ -20,6 +20,8 @@ jobs:
       JWT_EXPIRATION_TIME: '15m'
 
     steps:
+      - checkout
+
       - run:
           name: Setup
           command: | 
@@ -49,6 +51,8 @@ jobs:
       - image: mongo:4.2.3
 
     steps:
+      - checkout
+
       - run: 
           name: Run Test & Coverage
           command: npm test
@@ -60,6 +64,8 @@ jobs:
       - image: mongo:4.2.3
 
     steps:
+      - checkout
+
       - run:
           name: Run Deploy
           command: npm run deploy
