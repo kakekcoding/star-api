@@ -28,6 +28,7 @@ Star HRD adalah aplikasi HRD berbasis website, dibangun menggunakan [Nodejs](htt
 Di dalam folder project, kamu akan menenukan file `.env.example`. Lakukan cara berikut:
 
  1. Copy file `.env.example` lalu ubah namanya menjadi `.env` atau bisa dengan cara berikut:
+ 
     ```sh
     cp .env.example .env
     ```
