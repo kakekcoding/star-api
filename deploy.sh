@@ -1,34 +1,15 @@
 #!/bin/bash
 
-set -e
+docker login -u $DOCKER_USER -p $DOCKER_PASS
 
-WORK_DIR="~/ahmadrifai/dev.starhrd.site"
-BRANCH="master"
+docker build -t arifai209/star-hrd:1.0.0
+docker push arifai209/star-hrd:1.0.0
 
-echo ===================
-echo Auto deploy server
-echo Processing...
-echo ===================
-
-echo Connecting to remote server
-
-ssh ubuntu@$HOST << "ENDSSH"
-    whoami
-
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
-
-    . ~/.nvm/nvm.sh
-
-    nvm install 12.16.1
-
-    cd $WORK_DIR && pwd
-
-    git config --global user.name "Ahmad Rifa'i"
-    git config --global user.email "arifai209@gmail.com"
-
-    git remote add deploy ssh://ubuntu@$HOST/~/repo/starhrd.git
-    git push -u deploy $BRANCH
-
-    npm install
-    npm start
-ENDSSH
+ssh ubuntu@$HOST << EOF
+docker pull arifai209/star-hrd:1.0.0
+docker stop api-boilerplate || true
+docker rm api-boilerplate || true
+docker rmi arifai209/star-hrd:1.0.0 || true
+docker tag arifai209/star-hrd:1.0.0 arifai209/star-hrd:current
+docker run -d --name star-hrd -p 8080:8080 arifai209/star-hrd:current
+EOF

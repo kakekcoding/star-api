@@ -2,8 +2,8 @@ version: '3.7'
 
 services:
   star-hrd:
-    image: star-hrd-node
-    container_name: star-hrd-node
+    image: star-hrd
+    container_name: star-hrd
     build: .
     restart: always
     environment:
