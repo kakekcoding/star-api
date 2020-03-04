@@ -1,10 +1,10 @@
-FROM node:10.5.0
+FROM node:10.16.3
 
 WORKDIR /usr/src/app
 COPY ["package.json", "package-lock.json*", "./"]
 RUN npm install
 COPY . .
 
-EXPOSE 8000
+EXPOSE 8080
 
 CMD npm start
