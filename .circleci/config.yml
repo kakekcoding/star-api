@@ -1,7 +1,6 @@
 version: 2
 jobs:
   build:
-    name: Build
     working_directory: ~/star-hrd
 
     add_ssh_keys:
@@ -51,7 +50,6 @@ jobs:
             - ~/.npm
 
   deploy:
-    name: Deploy to server
     working_directory: ~/star-hrd
 
     docker:
