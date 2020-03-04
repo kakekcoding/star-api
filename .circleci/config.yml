@@ -7,17 +7,17 @@ jobs:
             - image: circleci/node:10.16.3
 
         add_ssh_keys:
-        fingerprints:
-            - "33:a5:c5:02:37:63:00:b9:d5:0a:bf:be:3b:2b:e5:c0"
+            fingerprints:
+                - "33:a5:c5:02:37:63:00:b9:d5:0a:bf:be:3b:2b:e5:c0"
     
         # Setup environment variables
         environment:
-        NODE_ENV: tests
-        DATABASE_URL: mongodb://127.0.0.1/star
-        DATABASE_URL_TESTS: mongodb://127.0.0.1/star_test
-        PORT: 8080
-        JWT_KEY: 221b368d7f5f597867f525971f28ff75
-        JWT_EXPIRATION_TIME: '15m'
+            NODE_ENV: tests
+            DATABASE_URL: mongodb://127.0.0.1/star
+            DATABASE_URL_TESTS: mongodb://127.0.0.1/star_test
+            PORT: 8080
+            JWT_KEY: 221b368d7f5f597867f525971f28ff75
+            JWT_EXPIRATION_TIME: '15m'
 
         steps:
         - run:
@@ -64,11 +64,11 @@ workflows:
     version: 2
     build-test-deploy:
         jobs:
-        - build
-        - test:
-            requires:
-                - build
-        - deploy:
-            requires:
-                - build
-                - test
+            - build
+            - test:
+                requires:
+                    - build
+            - deploy:
+                requires:
+                    - build
+                    - test
