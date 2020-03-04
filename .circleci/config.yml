@@ -1,14 +1,14 @@
 version: 2.1
 
 executors:
-	my-executor:
-		docker:
-			- image: circleci/node:10.16.3
-			- image: mongo:4.2.3
-		working_directory: ~/star-hrd
+  my-executor:
+    docker:
+      - image: circleci/node:10.16.3
+      - image: mongo:4.2.3
+    working_directory: ~/star-hrd
 
 jobs:
-  node:
+  build:
     executor: my-executor
 
     add_ssh_keys:
@@ -48,7 +48,7 @@ jobs:
             - ~/.npm 
   
   test:
-		executor: my-executor
+    executor: my-executor
 
     steps:
       - run: 
@@ -56,7 +56,7 @@ jobs:
           command: npm test
 
   deploy:
-		executor: my-executor
+    executor: my-executor
 
     steps:
       - run:
@@ -64,14 +64,14 @@ jobs:
           command: npm run deploy
       
 workflows:
-	version: 2
-	node-test-deploy:
-		jobs:
-			- node
-			- test:
-					requires:
-						- node
-			- deploy:
-					requires:
-						- node
-						- test
+  version: 2
+  build-test-deploy:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - deploy:
+          requires:
+            - build
+            - test
