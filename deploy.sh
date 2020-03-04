@@ -1,8 +1,8 @@
 #!/bin/bash
 
-docker login -u $DOCKER_USER -p $DOCKER_PASS
+docker login -username $DOCKER_USER --password-stdin $DOCKER_PASS
 
-docker build -t arifai209/star-hrd:1.0.0
+docker build -t arifai209/star-hrd:1.0.0 .
 docker push arifai209/star-hrd:1.0.0
 
 ssh ubuntu@$HOST << EOF
