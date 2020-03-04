@@ -34,7 +34,7 @@ router.route('/ja/status/update/:id').put(auth, jAStatusController.update);
 router.route('/ja/status/delete/:id').delete(auth, jAStatusController.delete);
 
 // employee
-router.route('/employee/create').post(employeeValidation(), employeeController.create);
+router.route('/employee/create').post(employeeValidation(), auth, employeeController.create);
 router.route('/employee').get(auth, employeeController.get);
 router.route('/employee/:id').get(auth, employeeController.getDetail);
 router.route('/employee/update/:id').put(auth, employeeController.update);
