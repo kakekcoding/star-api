@@ -21,5 +21,6 @@ ssh ubuntu@$HOST << "ENDSSH"
     git remote add deploy ssh://ubuntu@$HOST/~/repo/starhrd.git
     git push -u deploy $BRANCH
 
-    npm ci && npm run
+    npm install
+    npm run
 ENDSSH
