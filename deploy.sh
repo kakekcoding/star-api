@@ -14,4 +14,4 @@ git commit -m "Deploying"
 git remote add deploy ssh://ubuntu@$HOST/~/star-hrd.git
 git push -u deploy master
 
-ssh ubuntu@$HOST "cd ~/star-hrd.git/ && npm install && npm run"
+ssh ubuntu@$HOST "cd ~/star-hrd.git/ && npm ci && npm run"

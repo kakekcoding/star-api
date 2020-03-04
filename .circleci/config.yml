@@ -1,14 +1,19 @@
 version: 2
+
+executors:
+	my-executor:
+		docker:
+			- image: circleci/node:10.16.3
+			- image: mongo:4.2.3
+		working_directory: ~/star-hrd
+
 jobs:
   node:
-    working_directory: ~/star-hrd
+    executor: my-executor
 
     add_ssh_keys:
       fingerprints:
         - "33:a5:c5:02:37:63:00:b9:d5:0a:bf:be:3b:2b:e5:c0"
-
-    docker:
-      - image: circleci/node:10.16.3
     
     # Setup environment variables
     environment:
@@ -20,8 +25,6 @@ jobs:
       JWT_EXPIRATION_TIME: '15m'
 
     steps:
-      - checkout
-
       - run:
           name: Setup
           command: | 
@@ -45,40 +48,30 @@ jobs:
             - ~/.npm 
   
   test:
-    working_directory: ~/star-hrd
-
-    docker:
-      - image: mongo:4.2.3
+		executor: my-executor
 
     steps:
-      - checkout
-
       - run: 
           name: Run Test & Coverage
           command: npm test
 
   deploy:
-    working_directory: ~/star-hrd
-
-    docker:
-      - image: mongo:4.2.3
+		executor: my-executor
 
     steps:
-      - checkout
-
       - run:
           name: Run Deploy
           command: npm run deploy
       
 workflows:
-  version: 2
-  node-test-deploy:
-    jobs:
-      - node
-      - test:
-          requires:
-            - node
-      - deploy:
-          requires:
-            - node
-            - test
+	version: 2
+	node-test-deploy:
+		jobs:
+			- node
+			- test:
+					requires:
+						- node
+			- deploy:
+					requires:
+						- node
+						- test
