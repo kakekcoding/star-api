@@ -22,5 +22,5 @@ ssh ubuntu@$HOST << "ENDSSH"
     git push -u deploy $BRANCH
 
     npm install
-    npm run
+    npm start
 ENDSSH
