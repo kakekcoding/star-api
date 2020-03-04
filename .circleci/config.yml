@@ -1,7 +1,6 @@
 version: 2
 jobs:
-  build:
-    name: Build
+  node:
     working_directory: ~/star-hrd
 
     add_ssh_keys:
@@ -10,9 +9,8 @@ jobs:
 
     docker:
       - image: circleci/node:10.16.3
-      - image: mongo:4.2.3
     
-    # Setup environmet variables
+    # Setup environment variables
     environment:
       NODE_ENV: tests
       DATABASE_URL: mongodb://127.0.0.1/star
@@ -23,6 +21,7 @@ jobs:
 
     steps:
       - checkout
+
       - run:
           name: Setup
           command: | 
@@ -39,16 +38,47 @@ jobs:
       - run:
           name: Install Dependencies
           command: npm ci
-    
+
+      - save_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ~/.npm 
+  
+  test:
+    working_directory: ~/star-hrd
+
+    docker:
+      - image: mongo:4.2.3
+
+    steps:
+      - checkout
+
       - run: 
           name: Run Test & Coverage
           command: npm test
+
+  deploy:
+    working_directory: ~/star-hrd
+
+    docker:
+      - image: mongo:4.2.3
+
+    steps:
+      - checkout
 
       - run:
           name: Run Deploy
           command: npm run deploy
       
-      - save_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
-          paths:
-            - ~/.npm 
+workflows:
+  version: 2
+  node-test-deploy:
+    jobs:
+      - node
+      - test:
+          requires:
+            - node
+      - deploy:
+          requires:
+            - node
+            - test
