@@ -1,19 +1,14 @@
 version: 2
-
-executors:
-  my-executor:
-    docker:
-      - image: circleci/node:10.16.3
-      - image: mongo:4.2.3
-    working_directory: ~/star-hrd
-
 jobs:
   build:
-    executor: my-executor
+    working_directory: ~/star-hrd
 
     add_ssh_keys:
       fingerprints:
         - "33:a5:c5:02:37:63:00:b9:d5:0a:bf:be:3b:2b:e5:c0"
+
+    docker:
+      - image: circleci/node:10.16.3
     
     # Setup environment variables
     environment:
@@ -48,7 +43,10 @@ jobs:
             - ~/.npm 
   
   test:
-    executor: my-executor
+    working_directory: ~/star-hrd
+
+    docker:
+      - image: mongo:4.2.3
 
     steps:
       - run: 
@@ -56,7 +54,10 @@ jobs:
           command: npm test
 
   deploy:
-    executor: my-executor
+    working_directory: ~/star-hrd
+
+    docker:
+      - image: mongo:4.2.3
 
     steps:
       - run:
@@ -73,5 +74,4 @@ workflows:
             - build
       - deploy:
           requires:
-            - build
             - test
