@@ -13,7 +13,15 @@ echo ===================
 echo Connecting to remote server
 
 ssh ubuntu@$HOST << "ENDSSH"
-    cd $WORK_DIR
+    whoami
+
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+
+    . ~/.nvm/nvm.sh
+
+    nvm install 12.16.1
+
+    cd $WORK_DIR && pwd
 
     git config --global user.name "Ahmad Rifa'i"
     git config --global user.email "arifai209@gmail.com"
