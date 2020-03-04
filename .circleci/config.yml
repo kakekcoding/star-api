@@ -60,8 +60,8 @@ jobs:
       - checkout
 
       - run:
-        name: Run Deploy
-        command: ./deploy.sh
+          name: Run Deploy
+          command: ./deploy.sh
 
 workflows:
   version: 2
