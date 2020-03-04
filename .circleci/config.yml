@@ -1,35 +1,54 @@
 version: 2
 jobs:
   build:
-    branches:
-      only:
-        - master
-        - deploy
+    name: Build
+    working_directory: ~/star-hrd
+
+    add_ssh_keys:
+      fingerprints:
+        - "33:a5:c5:02:37:63:00:b9:d5:0a:bf:be:3b:2b:e5:c0"
 
     docker:
-      - image: circleci/node:10.16.2
-      - image: circleci/mongo:latest
-
+      - image: circleci/node:10.16.3
+      - image: mongo:4.2.3
+    
+    # Setup environmet variables
     environment:
       NODE_ENV: tests
       DATABASE_URL: mongodb://127.0.0.1/star
       DATABASE_URL_TESTS: mongodb://127.0.0.1/star_test
       PORT: 8080
       JWT_KEY: 221b368d7f5f597867f525971f28ff75
-      JWT_EXPIRATION_TIME: '10m'
-
-    working_directory: ~/public
+      JWT_EXPIRATION_TIME: '15m'
 
     steps:
       - checkout
-      - run: sudo npm i -g npm@latest
+      - run:
+          name: Setup
+          command: | 
+            chmod 755 deploy.sh
+            ssh-keyscan $HOST >> ~/.ssh/known_hosts
+
+      - run:
+          name: Check NPM Version
+          command: npm --version
+      
       - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            
-      - run: npm install
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+
+      - run:
+          name: Install Dependencies
+          command: npm ci
+    
+      - run: 
+          name: Run Test & Coverage
+          command: npm test
+
+      - run:
+          name: Run Deploy
+          command: npm run deploy
+      
       - save_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
           paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-      - run: npm test
+            - ~/.npm 

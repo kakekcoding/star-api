@@ -17,7 +17,7 @@ exports.connect = () => {
 		useCreateIndex: true,
 		keepAlive: 1,
 		useFindAndModify: false
-	}).then(() => console.log('Database connected'));
+	}).then(() => console.log('Database connected ' + DB_URL));
 
 	return mongoose.connection;
 };
