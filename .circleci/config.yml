@@ -51,7 +51,7 @@ jobs:
       - image: mongo:4.2.3
 
     steps:
-      - checkout
+      # - checkout
 
       - run: 
           name: Run Test & Coverage
@@ -64,7 +64,7 @@ jobs:
       - image: mongo:4.2.3
 
     steps:
-      - checkout
+      # - checkout
 
       - run:
           name: Run Deploy
