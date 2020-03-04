@@ -5,10 +5,6 @@ jobs:
 
         docker:
             - image: circleci/node:10.16.3
-
-        add_ssh_keys:
-            fingerprints:
-                - "33:a5:c5:02:37:63:00:b9:d5:0a:bf:be:3b:2b:e5:c0"
     
         # Setup environment variables
         environment:
@@ -18,6 +14,11 @@ jobs:
             PORT: 8080
             JWT_KEY: 221b368d7f5f597867f525971f28ff75
             JWT_EXPIRATION_TIME: '15m'
+
+        # SSH keys
+        add_ssh_keys:
+            fingerprints:
+                - "33:a5:c5:02:37:63:00:b9:d5:0a:bf:be:3b:2b:e5:c0"
 
         steps:
         - run:
