@@ -1,11 +1,14 @@
 const express = require('express');
 const router = express.Router();
+const auth = require('../middleware/auth');
 const authController = require('../controller/auth_controller');
 const jobApplicantController = require('../controller/job_applicant_controller');
 const jAStatusController = require('../controller/ja_status_controller');
+const employeeController = require('../controller/employee_controller');
 const { registerValidation, loginValidation } = require('../validation/auth_validation');
 const { jobApplicantValidation } = require('../validation/job_applicant_validation');
-const auth = require('../middleware/auth');
+const { employeeValidation } = require('../validation/employee_validation');
+
 
 // index
 router.get('/', (req, res) => res.send('Welcome'));
@@ -29,5 +32,12 @@ router.route('/ja/status/create').post(auth, jAStatusController.create);
 router.route('/ja/status').get(auth, jAStatusController.get);
 router.route('/ja/status/update/:id').put(auth, jAStatusController.update);
 router.route('/ja/status/delete/:id').delete(auth, jAStatusController.delete);
+
+// employee
+router.route('/employee/create').post(employeeValidation(), employeeController.create);
+router.route('/employee').get(auth, employeeController.get);
+router.route('/employee/:id').get(auth, employeeController.getDetail);
+router.route('/employee/update/:id').put(auth, employeeController.update);
+router.route('/employee/delete/:id').delete(auth, employeeController.delete);
 
 module.exports = router;
