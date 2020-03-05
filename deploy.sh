@@ -22,6 +22,5 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
 nvm install 12.16.3
 cd ~/ahmadrifai/dev.starhrd.site
 npm install
-cp .env.example .env
 pm2 restart api/server.js && exit
 EOF
