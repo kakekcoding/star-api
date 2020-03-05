@@ -9,9 +9,10 @@ git config --global user.email "arifai209@gmail.com"
 
 git init .
 git add .
-git commit -m "Deploying"
+git commit -m "Lets deploy to server...."
 git remote add deploy ubuntu@$HOST:/home/ubuntu/repo/starhrd.git
-git push -u deploy master
+git pull deploy master --allow-unrelated-histories
+git push deploy master
 
 ssh ubuntu@$HOST << EOF
 cd ~/ahmadrifai/dev.starhrd.site
