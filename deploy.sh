@@ -11,6 +11,7 @@ git init .
 git add .
 git commit -m "Go to deploy..."
 git remote add deploy ubuntu@$HOST:/home/ubuntu/repo/starhrd.git
+git pull deploy master
 git push deploy master
 
 ssh ubuntu@$HOST << EOF
