@@ -3,7 +3,7 @@ set -e
 
 echo =======================
 echo Ready deploy to server
-echo -e "=======================\n\n"
+echo "=======================\n\n"
 
 rm -rf .git
 
@@ -17,9 +17,11 @@ git remote add deploy ubuntu@$HOST:/home/ubuntu/repo/starhrd.git
 git push --force deploy master
 
 ssh ubuntu@$HOST << EOF
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+. ~/.nvm/nvm.sh
+nvm install 12.16.3
 cd ~/ahmadrifai/dev.starhrd.site
 npm install
 cp .env.example .env
-pm2 restart api/server.js
-exit
+pm2 start api/server.js && exit
 EOF
