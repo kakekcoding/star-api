@@ -23,5 +23,5 @@ nvm install 12.16.3
 cd ~/ahmadrifai/dev.starhrd.site
 npm install
 cp .env.example .env
-pm2 start api/server.js && exit
+pm2 restart api/server.js && exit
 EOF
