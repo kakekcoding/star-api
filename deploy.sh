@@ -2,14 +2,14 @@
 
 set -e
 
+git config --global user.name "Ahmad Rifa'i"
+git config --global user.email "arifai209@gmail.com"
+
 git remote add deploy ubuntu@$HOST:/home/ubuntu/repo/starhrd.git
 
 git pull deploy master --allow-unrelated-histories
 
 rm -rf .git
-
-git config --global user.name "Ahmad Rifa'i"
-git config --global user.email "arifai209@gmail.com"
 
 git init .
 git add .
