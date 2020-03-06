@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./api/server",
     "dev": "nodemon ./api/server",
-    "test": "cross-env NODE_ENV=tests nyc mocha --timeout 10000 --exit --recursive --report lcovonly -- -R spec ./api/tests/**/*js",
+    "test": "cross-env NODE_ENV=tests nyc mocha --timeout 10000 --exit --recursive -reporter=lcov -- -R spec ./api/tests/**/*js > coverage.lcov && ./node_modules/.bin/codecov",
     "lint": "eslint ./api/ --fix --ignore-path .gitignore --ignore-pattern internals/scripts",
     "docker:test": "docker-compose -f docker-compose.yml -f docker-compose.test.yml up --abort-on-container-exit",
     "deploy": "./deploy.sh",
@@ -26,14 +26,13 @@
     "express-validator": "^6.4.0",
     "http-status": "^1.4.2",
     "jsonwebtoken": "^8.5.1",
-    "mocha-lcov-reporter": "^1.3.0",
     "mongoose": "^5.9.2",
     "morgan": "^1.9.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
-    "codacy-coverage": "^3.4.0",
+    "codecov": "^3.6.5",
     "cross-env": "^7.0.0",
     "eslint": "^6.8.0",
     "mocha": "^7.0.1",
