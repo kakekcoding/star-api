@@ -10,7 +10,11 @@
     "lint": "eslint ./api/ --fix --ignore-path .gitignore --ignore-pattern internals/scripts",
     "docker:test": "docker-compose -f docker-compose.yml -f docker-compose.test.yml up --abort-on-container-exit",
     "deploy": "./deploy.sh",
-    "pm2": "pm2 start ./api/server.js"
+    "pm2:start": "pm2 start ./api/server.js",
+    "pm2:stop": "pm2 stop ./api/server.js",
+    "pm2:restart": "pm2 restart ./api/server.js",
+    "pm2:list": "pm2 list",
+    "pm2:monit": "pm2 monit"
   },
   "author": "Ahmad Rifa'i",
   "license": "MIT",
@@ -32,6 +36,7 @@
     "eslint": "^6.8.0",
     "mocha": "^7.0.1",
     "nodemon": "^2.0.2",
-    "nyc": "^15.0.0"
+    "nyc": "^15.0.0",
+    "pm2": "^4.2.3"
   }
 }
