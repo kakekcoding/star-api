@@ -13,7 +13,8 @@ git remote add deploy $USER@$HOST:/home/$USER/repo/starhrd.git
 git push --force deploy master
 
 ssh $USER@$HOST << EOF
-cd ~/ahmadrifai/starhrd.site
+cd ~/ahmadrifai/dev.starhrd.site
+npm i pm2 -g
 npm install
-npm run pm2 && exit
+pm2 start api/server.js && exit
 EOF

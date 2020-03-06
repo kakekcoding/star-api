@@ -27,6 +27,7 @@ jobs:
 
     steps:
       - checkout
+      
       - run:
           name: Setup
           command: | 
@@ -43,6 +44,11 @@ jobs:
       - run:
           name: Install Dependencies
           command: npm ci
+
+      - save_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ~/.npm
     
       - run: 
           name: Run Test & Coverage
@@ -51,8 +57,3 @@ jobs:
       - run:
           name: Run Deploy
           command: npm run deploy
-      
-      - save_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
-          paths:
-            - ~/.npm
