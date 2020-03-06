@@ -15,5 +15,5 @@ git push --force deploy master
 ssh $USER@$HOST << EOF
 cd ~/ahmadrifai/starhrd.site
 npm install
-npm run pm2:start && exit
+npm run pm2:restart && exit
 EOF
