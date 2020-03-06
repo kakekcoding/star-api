@@ -10,10 +10,10 @@ jobs:
 
     add_ssh_keys:
       fingerprints:
-        - "33:a5:c5:02:37:63:00:b9:d5:0a:bf:be:3b:2b:e5:c0"
+        - "e4:e3:af:48:75:d6:7e:50:90:23:5a:6e:23:8c:57:76"
 
     docker:
-      - image: circleci/node:10.16.3
+      - image: circleci/node:10.19.0
       - image: mongo:4.2.3
     
     # Setup environmet variables
