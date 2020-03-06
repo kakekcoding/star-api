@@ -52,7 +52,7 @@ jobs:
     
       - run: 
           name: Run Test & Coverage
-          command: npm test
+          command: npm run test:cover
 
       - run:
           name: Run Deploy

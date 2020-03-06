@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node ./api/server",
     "dev": "nodemon ./api/server",
-    "test": "cross-env NODE_ENV=tests nyc mocha --timeout 10000 --exit --recursive -reporter=lcov -- -R spec ./api/tests/**/*js > coverage.lcov && ./node_modules/.bin/codecov",
+    "test": "cross-env NODE_ENV=tests mocha --timeout 10000 --exit ./api/tests/**/*js",
+    "test:cover": "nyc npm test && nyc report --reporter=text-lcov > coverage.lcov && ./node_modules/.bin/codecov",
     "lint": "eslint ./api/ --fix --ignore-path .gitignore --ignore-pattern internals/scripts",
     "docker:test": "docker-compose -f docker-compose.yml -f docker-compose.test.yml up --abort-on-container-exit",
     "deploy": "./deploy.sh",
