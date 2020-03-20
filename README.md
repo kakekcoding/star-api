@@ -58,4 +58,4 @@ npm run test:cover
 
 This project is open-sourced software licensed under the MIT License. See the LICENSE file for more information.
 
-Made with :hearts: in Indonesia :indonesia: 
+Made with :hearts: in Indonesia :indonesia:    
